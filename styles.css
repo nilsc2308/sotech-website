@@ -236,7 +236,7 @@ html.no-motion .day .dial .arc{stroke-dashoffset:0!important}
 .story .frame img.on{opacity:1;transform:none}
 .story .frame .cnt{position:absolute;left:20px;top:20px;background:var(--sun);color:var(--ink);font-weight:800;font-size:13px;letter-spacing:.1em;padding:6px 10px;border-radius:6px;font-variant-numeric:tabular-nums}
 .story .frame .bar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:rgba(255,255,255,.25)}
-.story .frame .bar i{display:block;height:100%;background:var(--sun);width:0;transition:width .6s var(--ease)}
+.story .frame .bar i{display:block;height:100%;background:var(--sun);width:100%;transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
 .story .chap{padding:clamp(40px,7vh,80px) 0;border-top:1px solid var(--line)}
 .story .chap:first-child{border-top:0;padding-top:0}
 .story .chap .n{font-size:13px;font-weight:700;color:var(--red);letter-spacing:.12em;margin-bottom:14px;display:block}

@@ -238,7 +238,7 @@
   const story = $('.story');
   if (story) {
     const imgs = $$('.frame img', story), chaps = $$('.chap', story), cnt = $('.cnt', story), bar = $('.bar i', story);
-    const set = i => { imgs.forEach((im, k) => im.classList.toggle('on', k === i)); chaps.forEach((c, k) => c.classList.toggle('on', k === i)); cnt.textContent = `${String(i + 1).padStart(2, '0')} / ${String(chaps.length).padStart(2, '0')}`; bar.style.width = ((i + 1) / chaps.length * 100) + '%'; };
+    const set = i => { imgs.forEach((im, k) => im.classList.toggle('on', k === i)); chaps.forEach((c, k) => c.classList.toggle('on', k === i)); cnt.textContent = `${String(i + 1).padStart(2, '0')} / ${String(chaps.length).padStart(2, '0')}`; bar.style.transform = `scaleX(${(i + 1) / chaps.length})`; };
     set(0);
     chaps.forEach((c, i) => ScrollTrigger.create({ trigger: c, start: () => mobile() ? 'top 62%' : 'top 55%', end: () => mobile() ? 'bottom 62%' : 'bottom 55%', onEnter: () => set(i), onEnterBack: () => set(i) }));
   }
