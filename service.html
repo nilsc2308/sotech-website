@@ -68,14 +68,23 @@
 
 <section class="sec" style="background:var(--bg-2)" id="zeitplan">
   <div class="wrap">
-    <div class="sec-head"><p class="eyebrow">Zeitplan zum Ziehen</p><h2 class="h-l split">Schaffen wir es vor dem 1.1.2027?</h2><p class="lead">Ziehen Sie den Startpunkt – die Phasen bis zur Inbetriebnahme verschieben sich mit. Dauer der Phasen sind Erfahrungswerte, die Netzbetreiber-Bearbeitung schwankt regional stark.</p></div>
-    <div class="plan">
-      <div class="months" aria-hidden="true"><span>Sep 26</span><span>Okt</span><span>Nov</span><span>Dez</span><span>Jan 27</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span><span>Jul</span></div>
-      <div class="track"><span class="dl" aria-hidden="true"></span><button class="handle" type="button" role="slider" aria-label="Startdatum verschieben" aria-valuemin="0" aria-valuemax="100" aria-valuenow="2" aria-valuetext="Start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6"/></svg></button></div>
-      <div class="bars" aria-hidden="true"><div class="bar"><span>Beratung vor Ort</span><div><i>Beratung vor Ort</i></div></div><div class="bar"><span>Angebot &amp; Planung</span><div><i>Angebot &amp; Planung</i></div></div><div class="bar"><span>Netzbetreiber-Anmeldung</span><div><i>Netzbetreiber-Anmeldung</i></div></div><div class="bar"><span>Montage</span><div><i>Montage</i></div></div><div class="bar"><span>Zähler &amp; Inbetriebnahme</span><div><i>Zähler &amp; Inbetriebnahme</i></div></div><div class="bar"><span>Marktstammdatenregister</span><div><i>Marktstammdatenregister</i></div></div></div>
-      <div class="verdict" aria-live="polite"><span class="st"></span><div><b></b><span class="t"></span></div></div>
-      <p class="hint">Richtwerte: Beratung 1 Woche, Angebot &amp; Planung 2 Wochen, Netzbetreiber-Anmeldung ca. 6 Wochen, Montage 1 Woche, Zählersetzung &amp; Inbetriebnahme ca. 3 Wochen, Registrierung im Marktstammdatenregister innerhalb 4 Wochen danach. Keine Zusage – Lieferzeiten und Netzbetreiber entscheiden mit.</p>
+    <div class="sec-head"><p class="eyebrow">Planer</p><h2 class="h-l split">Schaffen wir es vor dem 1.1.2027?</h2><p class="lead">Wählen Sie, wann wir starten können – der Planer rechnet die Phasen bis zur Inbetriebnahme durch. Die Dauern sind Erfahrungswerte, die Netzbetreiber-Bearbeitung schwankt regional stark.</p></div>
+    <div class="plan2">
+      <div class="pick">
+        <p class="lab" id="startLbl">Wann können wir starten?</p>
+        <div class="starts" role="group" aria-labelledby="startLbl">
+          <button type="button" data-w="0" aria-pressed="true"><b>Sofort</b><span>diese Woche</span></button>
+          <button type="button" data-w="2" aria-pressed="false"><b>In 2 Wochen</b><span></span></button>
+          <button type="button" data-w="4" aria-pressed="false"><b>In 1 Monat</b><span></span></button>
+          <button type="button" data-w="8" aria-pressed="false"><b>In 2 Monaten</b><span></span></button>
+          <button type="button" data-w="12" aria-pressed="false"><b>In 3 Monaten</b><span></span></button>
+          <button type="button" data-w="20" aria-pressed="false"><b>Im neuen Jahr</b><span></span></button>
+        </div>
+        <div class="result" aria-live="polite"><p class="lab">Inbetriebnahme voraussichtlich</p><b class="date"></b><p class="verdict"></p><a class="btn btn-sun" href="kontakt.html?thema=beratung">Jetzt Termin sichern <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <ol class="phases" aria-label="Phasen bis zur Inbetriebnahme"></ol>
     </div>
+    <p class="muted" style="font-size:13px;line-height:1.5;margin-top:16px;max-width:760px">Richtwerte: Beratung 1 Woche, Angebot &amp; Planung 2 Wochen, Netzbetreiber-Anmeldung ca. 6 Wochen, Montage 1 Woche, Zählersetzung &amp; Inbetriebnahme ca. 3 Wochen, danach Registrierung im Marktstammdatenregister innerhalb von 4 Wochen. Keine Zusage – Lieferzeiten und Netzbetreiber entscheiden mit.</p>
   </div>
 </section>
 

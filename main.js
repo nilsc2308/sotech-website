@@ -339,34 +339,32 @@
     boxes.forEach(b => b.addEventListener('change', upd)); upd();
   }
 
-  // ---------- Zeitplan-Balken zum Ziehen (Service & Anmeldung) ----------
-  const plan = $('.plan');
+  // ---------- Planer: Startzeitpunkt wählen → Phasen mit Terminen (Service & Anmeldung) ----------
+  const plan = $('.plan2');
   if (plan) {
-    const track = $('.track', plan), handle = $('.handle', plan), bars = $$('.bar i', plan), verdict = $('.verdict', plan), dlLine = $('.dl', plan);
-    const M0 = new Date(2026, 8, 1); // Sep 2026 – Jul 2027
-    const end = new Date(2027, 7, 1); const span = end - M0; const deadline = new Date(2027, 0, 1);
-    dlLine.style.left = ((deadline - M0) / span * 100) + '%';
-    // Phasen in Wochen (Richtwerte, siehe LAUNCH-CHECKLISTE): Beratung, Angebot & Planung, Netzbetreiber-Anmeldung, Montage, Zähler & Inbetriebnahme, MaStR
-    const ph = [1, 2, 6, 1, 3, 4];
-    const W = 7 * 864e5; let p = clamp((Date.now() - M0) / span, 0, .72); // Start: heute
+    const W = 7 * 864e5, deadline = new Date(2027, 0, 1);
+    // Phasen in Wochen (Richtwerte, siehe LAUNCH-CHECKLISTE)
+    const PH = [['Beratung vor Ort', 1, 'Dach, Zählerschrank, Ziele – kostenlos, durch den Elektromeister'], ['Angebot & Planung', 2, 'Belegungsplan, Komponenten, Speicher- und Wallbox-Option'], ['Netzbetreiber-Anmeldung', 6, 'Wir melden an – die Bearbeitungszeit bestimmt der Netzbetreiber'], ['Montage', 1, 'Dachhaken, Schienen, Module, Verkabelung – meist ein Tag'], ['Zähler & Inbetriebnahme', 3, 'Zählerwechsel, Messung, Einweisung, Monitoring'], ['Marktstammdatenregister', 4, 'Registrierung innerhalb eines Monats nach Inbetriebnahme']];
+    const list = $('.phases', plan), res = $('.result', plan), btns = $$('.starts button', plan);
     const dstr = d => d.toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' });
-    const render = () => {
-      handle.style.left = (p * 100) + '%'; const start = new Date(M0.getTime() + p * span); handle.setAttribute('aria-valuetext', 'Start ' + dstr(start));
-      let t = start.getTime();
-      ph.forEach((w, i) => { const s = t, e = t + w * W; bars[i].style.left = ((s - M0) / span * 100) + '%'; bars[i].style.width = ((e - s) / span * 100) + '%'; t = e; });
-      const ibn = new Date(start.getTime() + (ph[0] + ph[1] + ph[2] + ph[3] + ph[4]) * W);
-      const ok = ibn < deadline; verdict.classList.toggle('late', !ok);
-      $('b', verdict).textContent = `Inbetriebnahme voraussichtlich ${dstr(ibn)}`;
-      $('span.t', verdict).textContent = ok ? `Das liegt vor dem 1.1.2027 – Ihre Anlage könnte noch die feste Einspeisevergütung nach EEG 2023 erhalten (aktuell 7,78 ct/kWh, 20 Jahre).` : `Das liegt nach dem 1.1.2027 – dann greift voraussichtlich das EEG 2027 mit Übergangsvergütung und späterer Direktvermarktung. Je früher Sie starten, desto besser.`;
+    const dshort = d => d.toLocaleDateString('de-DE', { day: '2-digit', month: 'short' });
+    btns.forEach(b => { if (+b.dataset.w) $('span', b).textContent = 'ab ' + dshort(new Date(Date.now() + b.dataset.w * W)); });
+    const render = w => {
+      let t = Date.now() + w * W; let html = ''; let placed = false; let ibn;
+      PH.forEach(([name, wk, txt], i) => {
+        const s = new Date(t), e = new Date(t + wk * W); t = e.getTime();
+        if (i === 5) ibn = s; // Inbetriebnahme = Start der Registrierungsphase
+        if (!placed && s >= deadline) { html += `<li class="deadline" aria-label="Stichtag 1. Januar 2027">Stichtag 1.1.2027</li>`; placed = true; }
+        html += `<li class="phase${s >= deadline ? ' after' : ''}"><span class="n">${i + 1}</span><div><b>${name}</b><small>${txt}</small></div><span class="d">${dshort(s)} – ${dshort(e)}<em>${wk} Woche${wk > 1 ? 'n' : ''}</em></span></li>`;
+      });
+      if (!placed) html += `<li class="deadline">Stichtag 1.1.2027 – Inbetriebnahme liegt davor</li>`;
+      list.innerHTML = html;
+      const ok = ibn < deadline; res.classList.toggle('late', !ok);
+      $('.date', res).textContent = dstr(ibn);
+      $('.verdict', res).textContent = ok ? `Das liegt vor dem 1.1.2027 – Ihre Anlage könnte noch die feste Einspeisevergütung nach EEG 2023 erhalten (aktuell 7,78 ct/kWh, 20 Jahre). Puffer: ${Math.floor((deadline - ibn) / 864e5)} Tage.` : `Das liegt nach dem 1.1.2027 – dann greift voraussichtlich das EEG 2027 mit Übergangsvergütung und späterer Direktvermarktung. Je früher wir starten, desto besser.`;
     };
-    const setFromX = x => { const r = track.getBoundingClientRect(); p = clamp((x - r.left) / r.width, 0, .72); render(); };
-    let drag = false;
-    handle.addEventListener('pointerdown', e => { drag = true; handle.setPointerCapture(e.pointerId); e.preventDefault(); });
-    addEventListener('pointermove', e => { if (drag) setFromX(e.clientX); });
-    addEventListener('pointerup', () => drag = false);
-    track.addEventListener('pointerdown', e => { if (e.target !== handle) setFromX(e.clientX); });
-    handle.addEventListener('keydown', e => { const step = 1 / 40; if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { p = clamp(p + step, 0, .72); render(); e.preventDefault(); } if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { p = clamp(p - step, 0, .72); render(); e.preventDefault(); } if (e.key === 'Home') { p = 0; render(); } if (e.key === 'End') { p = .72; render(); } });
-    render();
+    btns.forEach(b => b.addEventListener('click', () => { btns.forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); render(+b.dataset.w); }));
+    render(0);
   }
 
   // ---------- Referenzkarte mit klickbaren Punkten (Über uns) ----------
