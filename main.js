@@ -25,7 +25,7 @@
 
   // ---------- Navigation: minimal + Vollbild-Menü ----------
   const nav = $('#nav'), menuBtn = $('#menuBtn'), menu = $('#menu');
-  const hasHero = !!($('.hero') || $('.ph') || $('.err-page'));
+  const hasHero = !!($('.scene') || $('.ph') || $('.err-page'));
   if (hasHero) document.body.classList.add('over-hero');
   const navCheck = () => nav.classList.toggle('solid', window.scrollY > (hasHero ? innerHeight * .7 : 30));
   addEventListener('scroll', navCheck, { passive: true }); navCheck();
@@ -83,7 +83,7 @@
   const prog = $('#progress');
   if (prog) ScrollTrigger.create({ onUpdate: s => prog.style.transform = `scaleX(${s.progress})` });
   const sticky = $('.sticky-cta');
-  if (sticky) { const first = $('.hero') || $('.ph'); ScrollTrigger.create({ start: () => (first ? first.offsetHeight - innerHeight * .5 : 300), end: 'max', onToggle: t => sticky.classList.toggle('show', t.isActive) }); }
+  if (sticky) { const first = $('.scene') || $('.ph'); ScrollTrigger.create({ start: () => (first ? first.offsetHeight - innerHeight * .5 : 300), end: 'max', onToggle: t => sticky.classList.toggle('show', t.isActive) }); }
   $$('.totop').forEach(a => a.addEventListener('click', e => { e.preventDefault(); lenis ? lenis.scrollTo(0, { duration: 1.3 }) : scrollTo({ top: 0, behavior: 'smooth' }); }));
 
   // ---------- Magnetische Buttons + Lichtreflex, 3D-Tilt ----------
@@ -109,23 +109,60 @@
     ScrollTrigger.batch('.reveal', { start: 'top 90%', onEnter: els => gsap.to(els, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: .08, overwrite: true }) });
   }
 
-  // ---------- Split-Hero: Foto-Säule wechselt beim Scrollen, Text synchron ----------
-  const hero = $('.hero');
-  if (hero && !reduce) {
-    const figs = $$('.col figure', hero), chs = $$('.ch', hero), dots = $$('.dots i', hero), n = chs.length;
-    gsap.set(chs[0], { opacity: 1, visibility: 'visible' });
-    const tl = gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom bottom', scrub: .6, onUpdate: s => { const i = clamp(Math.floor(s.progress * n), 0, n - 1); dots.forEach((d, k) => d.classList.toggle('on', k === i)); } } });
-    tl.to({}, { duration: .55 });
-    for (let i = 1; i < n; i++) {
-      tl.to(chs[i - 1], { opacity: 0, y: -26, duration: .25, ease: 'power2.in' }, i - .05)
-        .to(figs[i], { clipPath: 'inset(0% 0 0 0)', duration: .55, ease: 'power3.inOut' }, i - .1)
-        .fromTo($('img', figs[i]), { scale: 1.16 }, { scale: 1.02, duration: 1.1, ease: 'power2.out' }, i - .1)
-        .to($('img', figs[i - 1]), { scale: 1.08, y: -20, duration: .6 }, i - .1)
-        .fromTo(chs[i], { opacity: 0, y: 30, visibility: 'visible' }, { opacity: 1, y: 0, duration: .35, ease: 'power3.out' }, i + .18);
-    }
-    tl.to({}, { duration: .6 });
-    gsap.to($('.sun', hero), { yPercent: 170, xPercent: -40, scale: .7, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom bottom', scrub: true } });
-    gsap.fromTo($('img', figs[0]), { scale: 1.12 }, { scale: 1.02, duration: 1.6, ease: 'power3.out', delay: seen ? .2 : 1.2 });
+  // ---------- Foto-Scroll-Through: 5 Fotos, 5 Blenden (Iris, Streifen-Vorhang, Flüssig-Wipe, Kacheln, Zoom-Dive + Blitz) ----------
+  const scene = $('.scene');
+  if (scene) {
+    // Streifen und Kacheln aus dem jeweiligen Foto bauen
+    const l3 = $('.l3', scene), l5 = $('.l5', scene); const small = innerWidth <= 820;
+    $('.strips', l3).innerHTML = Array.from({ length: 8 }, (_, i) => `<i style="background-position:0 ${i / 7 * 100}%"></i>`).join('');
+    $('.tiles', l5).innerHTML = Array.from({ length: 12 }, (_, i) => `<i style="background-position:${(i % 4) / 3 * 100}% ${Math.floor(i / 4) / 2 * 100}%"></i>`).join('');
+    // Fotos 2–5 erst nach dem Laden der Seite nachziehen (Ladegröße bis „load“ klein halten)
+    let lateDone = false; const late = () => { if (lateDone) return; lateDone = true;
+      $$('img[data-src]', scene).forEach(im => { im.srcset = im.dataset.srcset; im.src = im.dataset.src; });
+      $$('.strips i', l3).forEach(i => i.style.backgroundImage = `url(${small ? l3.dataset.imgM : l3.dataset.img})`);
+      $$('.tiles i', l5).forEach(i => i.style.backgroundImage = `url(${small ? l5.dataset.imgM : l5.dataset.img})`); };
+    if (document.readyState === 'complete') setTimeout(late, 300); else addEventListener('load', () => setTimeout(late, 300));
+    addEventListener('scroll', late, { once: true, passive: true });
+    const caps = $$('.cap', scene);
+    caps.forEach(c => $$('h1, h2, p:not(.k)', c).forEach(el => { const words = el.textContent.trim().split(/\s+/); el.setAttribute('aria-label', words.join(' ')); el.innerHTML = words.map(w => `<span class="w" aria-hidden="true">${w}</span>`).join(' '); }));
+    if (!reduce) {
+      const prog = document.createElement('div'); prog.className = 'prog'; prog.setAttribute('aria-hidden', 'true'); prog.innerHTML = '<i></i>'.repeat(5); $('.stage', scene).appendChild(prog); const bars = $$('i', prog);
+      const capIn = (c, t) => tl.set(c, { opacity: 1, visibility: 'visible' }, t).fromTo($$('.w', c), { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .35, stagger: .02, ease: 'power3.out', immediateRender: false }, t);
+      const capOut = (c, t) => tl.to($$('.w', c), { yPercent: -60, opacity: 0, duration: .2, stagger: .01, ease: 'power2.in' }, t).set(c, { visibility: 'hidden' }, t + .3);
+      const wave = p => { // Flüssig-Wipe: Wellenkante von oben nach unten
+        const pts = ['0 0', '100% 0']; const y = -25 + p * 150;
+        for (let i = 12; i >= 0; i--) { const x = i / 12 * 100; pts.push(`${x}% ${y + Math.sin(i / 12 * Math.PI * 2 + p * 4) * 9 + Math.cos(i / 12 * Math.PI * 3) * 5}%`); }
+        return `polygon(${pts.join(',')})`;
+      };
+      const L = i => $('.l' + i, scene);
+      const tl = gsap.timeline({ scrollTrigger: { trigger: scene, start: 'top top', end: 'bottom bottom', scrub: .5, onUpdate: s => bars.forEach((b, i) => b.style.setProperty('--p', clamp(s.progress * 5.6 - i, 0, 1))) } });
+      // 1: Ruhe + Zoom
+      tl.fromTo($('img', L(1)), { scale: 1.06 }, { scale: 1.18, duration: 1.1, ease: 'none' }, 0);
+      capOut($('.cap', L(1)), .75);
+      // 2: Iris-Blende
+      tl.fromTo($('img', L(2)), { scale: 1.25 }, { scale: 1.05, duration: 1, ease: 'power2.out' }, .9)
+        .to(L(2), { clipPath: 'circle(85% at 50% 55%)', duration: .6, ease: 'power2.inOut' }, .95);
+      capIn($('.cap', L(2)), 1.35); capOut($('.cap', L(2)), 1.85);
+      // 3: Vorhang aus horizontalen Streifen
+      tl.to($$('.strips i', L(3)), { scaleX: 1, duration: .45, stagger: { each: .05, from: 'start' }, ease: 'power3.inOut' }, 2.0);
+      capIn($('.cap', L(3)), 2.5); capOut($('.cap', L(3)), 3.0);
+      // 4: Flüssig-Wipe (clip-path-Polygon mit Wellenkante)
+      const wv = { p: 0 };
+      tl.to(wv, { p: 1, duration: .6, ease: 'power2.inOut', onUpdate: () => L(4).style.clipPath = wave(wv.p) }, 3.15)
+        .fromTo($('img', L(4)), { scale: 1.15, y: -30 }, { scale: 1.02, y: 0, duration: 1, ease: 'power2.out' }, 3.15);
+      capIn($('.cap', L(4)), 3.65); capOut($('.cap', L(4)), 4.15);
+      // 5: Kachel-Montage → Zoom-Dive + Lichtblitz
+      tl.to($$('.tiles i', L(5)), { scale: 1, opacity: 1, duration: .4, stagger: { each: .04, from: 'random' }, ease: 'back.out(1.4)' }, 4.3)
+        .to($('.dive', L(5)), { opacity: 1, duration: .15 }, 4.95)
+        .to($('.dive', L(5)), { scale: 2.6, duration: .7, ease: 'power3.in' }, 5.0)
+        .to($('.flash', L(5)), { opacity: 1, duration: .18, ease: 'power2.in' }, 5.55)
+        .to($('.flash', L(5)), { opacity: 0, duration: .35, ease: 'power2.out' }, 5.73)
+        .set($('.dive', L(5)), { scale: 1.15 }, 5.73)
+        .to($('.dive', L(5)), { scale: 1.02, duration: .8, ease: 'power2.out' }, 5.73)
+        .to($('.final', scene), { opacity: 1, visibility: 'visible', duration: .3 }, 5.7);
+      capIn($('.final .cap', scene), 5.85);
+      tl.to({}, { duration: .5 });
+    } else $$('.w', scene).forEach(w => w.style.opacity = 1);
   }
 
   // ---------- Zahl schrumpft und rastet in den Text ein ----------
@@ -139,7 +176,7 @@
     };
     const tl = gsap.timeline({ scrollTrigger: { trigger: year, start: 'top top', end: 'bottom bottom', scrub: .5, invalidateOnRefresh: true } });
     tl.fromTo(big, { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 1 }, { x: () => target().x, y: () => target().y, scale: () => target().scale, duration: 1, ease: 'power2.inOut' })
-      .fromTo(copy, { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, .55)
+      .fromTo(copy, { opacity: 0 }, { opacity: 1, duration: .3, ease: 'power2.out' }, .92)
       .to({}, { duration: .35 });
   }
 
@@ -191,7 +228,7 @@
       let y = 100; for (let i = 0; i < bgKey.length - 1; i++) { const [h0, v0] = bgKey[i], [h1, v1] = bgKey[i + 1]; if (h >= h0 && h <= h1) { y = v0 + (v1 - v0) * (h - h0) / (h1 - h0); break; } }
       stage.style.backgroundPosition = `0 ${y}%`; stage.classList.toggle('n', hh >= 17.2 || hh < 6.2);
       const si = hh >= 5 && hh < 9 ? 0 : hh >= 9 && hh < 16 ? 1 : hh >= 16 && hh < 21 ? 2 : 3;
-      states.forEach((s, i) => { if (i === si && !s.classList.contains('on')) { s.classList.add('on'); gsap.fromTo(s, { opacity: 0, y: 24, visibility: 'visible' }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out', overwrite: true }); } else if (i !== si && s.classList.contains('on')) { s.classList.remove('on'); gsap.to(s, { opacity: 0, y: -16, duration: .3, overwrite: true, onComplete: () => s.style.visibility = 'hidden' }); } });
+      states.forEach((s, i) => { if (i === si && !s.classList.contains('on')) { s.classList.add('on'); gsap.fromTo(s, { opacity: 0, y: 24, visibility: 'visible' }, { opacity: 1, y: 0, duration: .45, delay: .18, ease: 'power3.out', overwrite: true }); } else if (i !== si && s.classList.contains('on')) { s.classList.remove('on'); gsap.to(s, { opacity: 0, y: -16, duration: .18, overwrite: true, onComplete: () => s.style.visibility = 'hidden' }); } });
     };
     if (reduce) { states.forEach(s => { s.style.opacity = 1; s.style.visibility = 'visible'; }); setHour(12); states.forEach(s => { s.style.opacity = 1; s.style.visibility = 'visible'; }); }
     else { const o = { h: 5 }; setHour(5); ScrollTrigger.create({ trigger: day, start: 'top top', end: 'bottom bottom', scrub: .4, onUpdate: s => { o.h = 5 + s.progress * 24; setHour(o.h); }, onRefresh: s => setHour(5 + s.progress * 24) }); }

@@ -12,7 +12,7 @@ TEL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="
 MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
 CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>'
 
-NAV = [('index.html', 'Start', '01'), ('photovoltaik.html', 'Photovoltaik', '02'), ('speicher-wallbox.html', 'Speicher & Wallbox', '03'), ('service.html', 'Service & Anmeldung', '04'), ('ueber-uns.html', 'Über uns', '05'), ('ratgeber.html', 'Ratgeber', '06'), ('faq.html', 'Fragen', '07'), ('kontakt.html', 'Kontakt', '08')]
+NAV = [('index.html', 'Start', '01'), ('photovoltaik.html', 'Photovoltaik', '02'), ('speicher.html', 'Stromspeicher', '03'), ('wallbox.html', 'Wallbox', '04'), ('service.html', 'Service & Anmeldung', '05'), ('referenzen.html', 'Referenzen', '06'), ('ueber-uns.html', 'Über uns', '07'), ('ratgeber.html', 'Ratgeber', '08'), ('faq.html', 'Fragen', '09'), ('kontakt.html', 'Kontakt', '10')]
 
 def img(name, alt, w, h, cls='', lazy=True, sizes='(max-width: 820px) 100vw, 50vw', fetch=False):
     small = int(w*0.55) if w > 900 else 500
@@ -115,7 +115,7 @@ def foot():
   <div class="wrap">
     <div class="top">
       <div><a class="logo" href="index.html" aria-label="SOTECH – Startseite">{LOGO}</a><p>Familienbetrieb für Solartechnik seit 1988. Photovoltaik, Speicher, Wallboxen und Elektroarbeiten aus Meisterhand – im Umkreis von rund 50 km um Aachen und Stolberg.</p></div>
-      <div><h4>Leistungen</h4><ul><li><a href="photovoltaik.html">Photovoltaik</a></li><li><a href="speicher-wallbox.html">Speicher &amp; Wallbox</a></li><li><a href="service.html">Service &amp; Anmeldung</a></li><li><a href="ueber-uns.html#referenzen">Referenzen</a></li></ul></div>
+      <div><h4>Leistungen</h4><ul><li><a href="photovoltaik.html">Photovoltaik</a></li><li><a href="speicher.html">Stromspeicher</a></li><li><a href="wallbox.html">Wallbox</a></li><li><a href="service.html">Service &amp; Anmeldung</a></li><li><a href="referenzen.html">Referenzen</a></li></ul></div>
       <div><h4>Unternehmen</h4><ul><li><a href="ueber-uns.html">Über uns</a></li><li><a href="ueber-uns.html#team">Team</a></li><li><a href="ratgeber.html">Ratgeber</a></li><li><a href="faq.html">Häufige Fragen</a></li><li><a href="kontakt.html">Kontakt</a></li></ul></div>
       <div><h4>Kontakt</h4><ul><li>{CO['name']}</li><li>{CO['street']}</li><li>{CO['zip']} {CO['city']}</li><li><a href="tel:{CO['telh']}">{CO['tel']}</a></li><li><a href="mailto:{CO['mail']}">{CO['mail']}</a></li></ul></div>
     </div>
@@ -147,27 +147,14 @@ pages = []
 
 # ============================ STARTSEITE ============================
 INDEX = f'''
-<section class="hero" id="top">
+<section class="scene" id="top" aria-label="Einstieg">
   <div class="stage">
-    <div class="txt">
-      <div class="sun" aria-hidden="true"></div>
-      <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-      <div class="chapters">
-        <div class="ch"><p class="idx"><i></i>Photovoltaik · Stolberg &amp; Aachen</p><h1>Solarstrom vom eigenen Dach.</h1><p>Wir planen und errichten PV-Anlagen, Speicher und Wallboxen – seit 1988, als Familienbetrieb, mit Elektromeister. Alles aus einer Hand, im Umkreis von rund 50 km um Aachen und Stolberg.</p></div>
-        <div class="ch"><p class="idx"><i></i>Montage aus Meisterhand</p><h2>Jedes Dach wird einzeln geplant.</h2><p>Kein Schema F: Ausrichtung, Neigung, Verschattung und Statik werden vor Ort begutachtet. Viele unserer Monteure und Elektriker sind seit ihrer Ausbildung im Betrieb.</p></div>
-        <div class="ch"><p class="idx"><i></i>Stromspeicher</p><h2>Sonne auch nach Sonnenuntergang.</h2><p>Mit einem Speicher nutzen Sie Ihren Solarstrom abends und nachts – und mit Notstromfunktion bleibt das Haus auch bei Netzausfall versorgt. SMA-Systeme, Tesla-Speicher und mehr.</p></div>
-        <div class="ch"><p class="idx"><i></i>Wallbox 11 kW</p><h2>Tanken in der eigenen Garage.</h2><p>Wir installieren leistungsstarke Wallboxen – in der Garage, am Carport oder in der Tiefgarage – inklusive der verpflichtenden Anmeldung beim Netzbetreiber.</p></div>
-        <div class="ch"><p class="idx"><i></i>Familienbetrieb seit 1988</p><h2>Auch nach 38 Jahren noch am selben Standort.</h2><p>Der Chef steht selbst auf dem Dach und berät am Küchentisch. Wir verkaufen kein anonymes Produkt, sondern eine Lösung, für die wir mit unserem Namen bürgen.</p></div>
-      </div>
-      <div class="actions"><a class="btn btn-sun" href="kontakt.html?thema=beratung">Kostenlose Beratung {ARROW}</a><a class="btn btn-ghost" href="#leistungen">Leistungen</a></div>
-    </div>
-    <div class="col" aria-hidden="true">
-      <figure>{img('u-dach-haus', '', 1800, 1201, lazy=False, sizes='(max-width: 1020px) 100vw, 50vw')}<figcaption>Photovoltaik</figcaption></figure>
-      <figure>{img('u-montage', '', 1200, 1620, sizes='(max-width: 1020px) 100vw, 50vw')}<figcaption>Montage</figcaption></figure>
-      <figure>{img('k-speicher', '', 1800, 1350, sizes='(max-width: 1020px) 100vw, 50vw')}<figcaption>Speicher · SMA-System, Kundenanlage</figcaption></figure>
-      <figure>{img('u-laden', '', 1200, 1620, sizes='(max-width: 1020px) 100vw, 50vw')}<figcaption>Wallbox</figcaption></figure>
-      <figure>{img('k-team', '', 900, 881, sizes='(max-width: 1020px) 100vw, 50vw')}<figcaption>Das SOTECH-Team</figcaption></figure>
-    </div>
+    <div class="layer l1"><img src="img/u-viertel.webp" srcset="img/u-viertel-m.webp 990w, img/u-viertel.webp 1800w" sizes="100vw" width="1800" height="1200" alt="" fetchpriority="high"><div class="cap"><p class="k">Photovoltaik · Stolberg &amp; Aachen</p><h1>Solarstrom vom eigenen Dach.</h1><p>Familienbetrieb mit Elektromeister – seit 1988.</p></div></div>
+    <div class="layer l2"><img data-src="img/u-modul-3.webp" data-srcset="img/u-modul-3-m.webp 990w, img/u-modul-3.webp 1800w" sizes="100vw" width="1800" height="1200" alt="" loading="lazy"><div class="cap"><p class="k">Erfahrung</p><h2>1.500 Anlagen. 7.800 kWp.</h2><p>Jedes Dach einzeln geplant – kein Schema F.</p></div></div>
+    <div class="layer l3" data-img="img/k-speicher.webp" data-img-m="img/k-speicher-m.webp"><div class="strips" aria-hidden="true"></div><div class="cap"><p class="k">Stromspeicher</p><h2>Sonne auch nach Sonnenuntergang.</h2><p>SMA- und Tesla-Speicher mit Notstromfunktion.</p></div></div>
+    <div class="layer l4"><img data-src="img/k-flachdach.webp" data-srcset="img/k-flachdach-m.webp 900w, img/k-flachdach.webp 1600w" sizes="100vw" width="1600" height="910" alt="" loading="lazy"><div class="cap"><p class="k">Montage aus Meisterhand</p><h2>Eingespielte Teams, seit der Ausbildung im Betrieb.</h2><p>Dachhaken, Schienen, Module, Anmeldung – alles aus einer Hand.</p></div></div>
+    <div class="layer l5" data-img="img/u-dach-haus.webp" data-img-m="img/u-dach-haus-m.webp"><div class="tiles" aria-hidden="true"></div><img class="dive" data-src="img/u-dach-haus.webp" data-srcset="img/u-dach-haus-m.webp 990w, img/u-dach-haus.webp 1800w" sizes="100vw" width="1800" height="1201" alt="" loading="lazy"><div class="flash" aria-hidden="true"></div></div>
+    <div class="final"><div class="cap"><p class="k">Familienbetrieb seit 1988</p><h2>Auch nach 38 Jahren noch am selben Standort.</h2><p>Der Chef steht selbst auf dem Dach und berät am Küchentisch. Kostenlos, vor Ort, mit Handschlag.</p><div class="actions"><a class="btn btn-sun" href="kontakt.html?thema=beratung">Kostenlose Beratung {ARROW}</a><a class="btn btn-ghost" href="#leistungen">Leistungen</a></div></div></div>
   </div>
 </section>
 
@@ -188,10 +175,10 @@ INDEX = f'''
     <div class="sec-head"><p class="eyebrow">Leistungen</p><h2 class="h-l split">Alles aus einer Hand – vom Dachhaken bis zur Anmeldung.</h2></div>
     <div class="acc">
       <div class="strip on" tabindex="0" role="button" aria-expanded="true" data-href="photovoltaik.html">{img('u-modul-2', '', 1800, 1200, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">01</span><h3>Photovoltaik</h3><p>Planung und Montage von PV-Anlagen auf Sattel-, Pult- und Flachdächern. Module von Heckert Solar (Chemnitz), Wechselrichter von SMA, Montagesystem TRIC von Wagner Solar.</p><a class="go" href="photovoltaik.html">Mehr zur Photovoltaik {ARROW}</a></div></div>
-      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="speicher-wallbox.html">{img('k-speicher', '', 1800, 1350, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">02</span><h3>Stromspeicher</h3><p>SMA-DC-Speichersysteme und Tesla-Speicher mit Notstrom- und Ersatzstromfunktion. Wir dimensionieren den Speicher passend zu Ihrem Verbrauch.</p><a class="go" href="speicher-wallbox.html">Mehr zu Speichern {ARROW}</a></div></div>
-      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="speicher-wallbox.html#wallbox">{img('k-wallbox-2', '', 1200, 1600, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">03</span><h3>Wallbox</h3><p>Zappy Wallbox 11 kW – sicheres, schnelles Laden zu Hause. Prüfung vor Ort, Montage und Anmeldung beim Netzbetreiber inklusive.</p><a class="go" href="speicher-wallbox.html#wallbox">Mehr zur Wallbox {ARROW}</a></div></div>
-      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="service.html">{img('k-zaehlerschrank', '', 796, 600, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">04</span><h3>Anmeldung &amp; Service</h3><p>Anmeldung beim Netzbetreiber und im Marktstammdatenregister, Anmeldung von Wärmepumpen, Wartung, Monitoring und Solarversicherung – die Bürokratie übernehmen wir.</p><a class="go" href="service.html">Mehr zum Service {ARROW}</a></div></div>
-      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="service.html#elektro">{img('k-zaehler', '', 800, 600, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">05</span><h3>Elektroarbeiten</h3><p>Hausinstallationen in Alt- und Neubau, Zählerschränke, Sat-Anlagen und Türsprechanlagen – der Elektromeisterbetrieb hinter der Solartechnik.</p><a class="go" href="service.html#elektro">Mehr zu Elektroarbeiten {ARROW}</a></div></div>
+      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="speicher.html">{img('k-speicher', '', 1800, 1350, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">02</span><h3>Stromspeicher</h3><p>SMA-DC-Speichersysteme und Tesla-Speicher mit Notstrom- und Ersatzstromfunktion. Wir dimensionieren den Speicher passend zu Ihrem Verbrauch.</p><a class="go" href="speicher.html">Mehr zu Speichern {ARROW}</a></div></div>
+      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="wallbox.html">{img('k-wallbox-2', '', 1200, 1600, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">03</span><h3>Wallbox</h3><p>Zappy Wallbox 11 kW – sicheres, schnelles Laden zu Hause. Prüfung vor Ort, Montage und Anmeldung beim Netzbetreiber inklusive.</p><a class="go" href="wallbox.html">Mehr zur Wallbox {ARROW}</a></div></div>
+      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="service.html">{img('k-zaehlerschrank', '', 796, 600, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">04</span><h3>Service</h3><p>Anmeldung beim Netzbetreiber und im Marktstammdatenregister, Anmeldung von Wärmepumpen, Wartung, Monitoring und Solarversicherung – die Bürokratie übernehmen wir.</p><a class="go" href="service.html">Mehr zum Service {ARROW}</a></div></div>
+      <div class="strip" tabindex="0" role="button" aria-expanded="false" data-href="referenzen.html">{img('r-zg30', '', 1204, 1065, sizes='(max-width: 820px) 100vw, 60vw')}<div class="lab"><span class="num">05</span><h3>Referenzen</h3><p>Rund 1.500 Anlagen in 38 Jahren – auf der Karte, in Bildern und als Besichtigungsanlage in Aachen.</p><a class="go" href="referenzen.html">Zu den Referenzen {ARROW}</a></div></div>
     </div>
   </div>
 </section>
@@ -234,12 +221,36 @@ INDEX = f'''
       <div class="st"><p class="kicker">05–09 Uhr · Morgen</p><h2>Die Anlage <span>wacht auf.</span></h2><p>Mit dem ersten Licht beginnen die Module zu arbeiten. Der Speicher hat die Nacht überbrückt – jetzt übernimmt wieder das Dach: Kühlschrank, Kaffee, Warmwasser laufen mit Solarstrom.</p></div>
       <div class="st"><p class="kicker">09–16 Uhr · Mittag</p><h2>Das Dach lädt <span>Speicher und Auto.</span></h2><p>Zur Mittagszeit produziert die Anlage mehr, als das Haus braucht. Der Überschuss fließt in den Speicher und über die Wallbox ins E-Auto. Erst wenn beides voll ist, geht Strom ins Netz.</p></div>
       <div class="st"><p class="kicker">16–21 Uhr · Abend</p><h2>Der Speicher <span>übernimmt.</span></h2><p>Wenn die Sonne sinkt und der Verbrauch steigt – Kochen, Licht, Fernseher – versorgt der Speicher das Haus. Teuren Netzstrom brauchen Sie kaum noch.</p></div>
-      <div class="st"><p class="kicker">21–05 Uhr · Nacht</p><h2>Unabhängig – <span>auch bei Stromausfall.</span></h2><p>Mit Ersatzstromfunktion trennt sich das System bei Netzausfall automatisch vom Netz und versorgt die wichtigsten Verbraucher weiter. Am nächsten Morgen lädt die Sonne den Speicher wieder auf.</p><p style="margin-top:18px"><a class="link-arrow" href="speicher-wallbox.html">So funktioniert Speicher mit Notstrom {ARROW}</a></p></div>
+      <div class="st"><p class="kicker">21–05 Uhr · Nacht</p><h2>Unabhängig – <span>auch bei Stromausfall.</span></h2><p>Mit Ersatzstromfunktion trennt sich das System bei Netzausfall automatisch vom Netz und versorgt die wichtigsten Verbraucher weiter. Am nächsten Morgen lädt die Sonne den Speicher wieder auf.</p><p style="margin-top:18px"><a class="link-arrow" href="speicher.html">So funktioniert Speicher mit Notstrom {ARROW}</a></p></div>
     </div>
   </div>
 </section>
 
-<section class="sec story" id="ablauf">
+<section class="mq" aria-label="Einsatzgebiet">
+  <div class="track"><div class="row">
+    <span>Stolberg</span><img src="img/r-zg30-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Aachen</span><span class="dot"></span><span>Eschweiler</span><img src="img/r-haus-2-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Düren</span><span class="dot"></span><span>Jülich</span><img src="img/r-yingli-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Herzogenrath</span><span class="dot"></span><span>Hürtgenwald</span><img src="img/r-baur-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Würselen</span><span class="dot"></span><span>Alsdorf</span><img src="img/r-carport-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Roetgen</span><span class="dot"></span>
+  </div></div>
+  <p class="mq-note">Unser Einsatzgebiet: rund 50 km um Aachen und Stolberg – Städteregion Aachen, Kreis Düren und Kreis Heinsberg.</p>
+</section>
+
+<section class="sec dark eeg rounded-top">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="grid">
+      <div class="reveal"><div class="date">1.1.<br>2027<small>Stichtag EEG 2027</small></div><div class="days"><b id="daysLeft">–</b><span>Tage bis zum Stichtag</span></div></div>
+      <div>
+        <p class="eyebrow">Jetzt handeln</p>
+        <h2 class="h-m split" style="margin-bottom:22px">Schnelles Handeln ist gefordert: Errichten Sie Ihre PV-Anlage vor dem 1.1.2027.</h2>
+        <p class="reveal">Die feste Einspeisevergütung wird für Neuanlagen zum 1. Januar 2027 abgeschafft. Anlagen, die danach ans Netz gehen, erhalten nur noch eine abgesenkte Übergangszahlung und müssen später in die Direktvermarktung – mit Smart Meter, Steuerbox und Dienstleister.</p>
+        <p class="reveal">Wer bis Ende 2026 in Betrieb geht, sichert sich die Vergütung nach EEG 2023 für 20 Jahre. Die Mehrwertsteuerbefreiung für neue PV-Anlagen bleibt zunächst bestehen.</p>
+        <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-sun" href="service.html#zeitplan">Zeitplan prüfen {ARROW}</a><a class="btn btn-ghost" href="ratgeber-eeg-2027.html">Was sich ändert</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+''' + cta_section()
+
+STORY_SEC = f'''<section class="sec story" id="ablauf">
   <div class="wrap">
     <div class="sec-head"><p class="eyebrow">So läuft die Montage</p><h2 class="h-l split">Vom ersten Dachhaken bis zur Inbetriebnahme.</h2><p class="lead">Eine Reportage von einer unserer Baustellen – ein steiles Pfannendach, 48 Module, ein Tag.</p></div>
     <div class="grid">
@@ -264,14 +275,8 @@ INDEX = f'''
   </div>
 </section>
 
-<section class="mq" aria-label="Einsatzgebiet">
-  <div class="track"><div class="row">
-    <span>Stolberg</span><img src="img/r-zg30-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Aachen</span><span class="dot"></span><span>Eschweiler</span><img src="img/r-haus-2-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Düren</span><span class="dot"></span><span>Jülich</span><img src="img/r-yingli-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Herzogenrath</span><span class="dot"></span><span>Hürtgenwald</span><img src="img/r-baur-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Würselen</span><span class="dot"></span><span>Alsdorf</span><img src="img/r-carport-m.webp" width="200" height="150" alt="" loading="lazy"><span class="ol">Roetgen</span><span class="dot"></span>
-  </div></div>
-  <p class="mq-note">Unser Einsatzgebiet: rund 50 km um Aachen und Stolberg – Städteregion Aachen, Kreis Düren und Kreis Heinsberg.</p>
-</section>
-
-<section class="sec calc" id="rechner">
+'''
+CALC_SEC = f'''<section class="sec calc" id="rechner">
   <div class="wrap">
     <div class="sec-head"><p class="eyebrow">Schnell-Check</p><h2 class="h-l split">Was bringt Ihr Dach?</h2><p class="lead">Dachfläche und Stromverbrauch eingeben – das Ergebnis rechnet live mit. Richtwerte für die Region Aachen, keine Angebotsgrundlage.</p></div>
     <div class="box">
@@ -293,23 +298,7 @@ INDEX = f'''
   </div>
 </section>
 
-<section class="sec dark eeg rounded-top">
-  <div class="glow" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="grid">
-      <div class="reveal"><div class="date">1.1.<br>2027<small>Stichtag EEG 2027</small></div><div class="days"><b id="daysLeft">–</b><span>Tage bis zum Stichtag</span></div></div>
-      <div>
-        <p class="eyebrow">Jetzt handeln</p>
-        <h2 class="h-m split" style="margin-bottom:22px">Schnelles Handeln ist gefordert: Errichten Sie Ihre PV-Anlage vor dem 1.1.2027.</h2>
-        <p class="reveal">Die feste Einspeisevergütung wird für Neuanlagen zum 1. Januar 2027 abgeschafft. Anlagen, die danach ans Netz gehen, erhalten nur noch eine abgesenkte Übergangszahlung und müssen später in die Direktvermarktung – mit Smart Meter, Steuerbox und Dienstleister.</p>
-        <p class="reveal">Wer bis Ende 2026 in Betrieb geht, sichert sich die Vergütung nach EEG 2023 für 20 Jahre. Die Mehrwertsteuerbefreiung für neue PV-Anlagen bleibt zunächst bestehen.</p>
-        <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-sun" href="service.html#zeitplan">Zeitplan prüfen {ARROW}</a><a class="btn btn-ghost" href="ratgeber-eeg-2027.html">Was sich ändert</a></div>
-      </div>
-    </div>
-  </div>
-</section>
-''' + cta_section()
-
+'''
 pages.append(dict(file='index.html', title='Photovoltaik Stolberg & Aachen – SOTECH GmbH, Familienbetrieb seit 1988', desc='PV-Anlagen, Stromspeicher und Wallboxen vom Elektromeisterbetrieb in Stolberg. Seit 1988, rund 1.500 Anlagen, alles aus einer Hand – kostenlose Beratung.', body=INDEX))
 
 # ============================ PHOTOVOLTAIK ============================
@@ -351,51 +340,23 @@ PV = page_hero({}, 'u-modul-3', 'Solarmodule auf einem Dach unter blauem Himmel'
     <div class="sec-head"><p class="eyebrow">Komponenten</p><h2 class="h-l split">Wir verarbeiten Qualität, die überzeugt.</h2></div>
     <div class="cards">
       <div class="card tilt reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/></svg></span><h3>Solarmodule – Heckert Solar</h3><p>Deutscher Hersteller aus Chemnitz, „Made in Germany“. ZEUS-Serie: Glas-Glas-Module mit TOPCon-/bifazialer Technik, ca. 445–460 Wp für Hausdächer, Back-Contact ohne sichtbare Leiterbahnen. ZEUS Full Black für Design-Anlagen, Fassaden und schwierige Dächer.</p><a class="link-arrow" href="https://www.heckertsolar.com/" target="_blank" rel="noopener">heckertsolar.com {ARROW}</a></div>
-      <div class="card tilt reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><h3>Wechselrichter &amp; Speicher – SMA</h3><p>Sunny Boy und Sunny Tripower Smart Energy als Hybridsysteme mit DC-Speicher, Notstromsteckdose oder Ersatzstromversorgung, Monitoring per App. Bei Netzausfall trennt sich das System normgerecht (VDE-AR-N 4105) und versorgt das Haus weiter.</p><a class="link-arrow" href="speicher-wallbox.html">Speicher im Detail {ARROW}</a></div>
+      <div class="card tilt reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><h3>Wechselrichter &amp; Speicher – SMA</h3><p>Sunny Boy und Sunny Tripower Smart Energy als Hybridsysteme mit DC-Speicher, Notstromsteckdose oder Ersatzstromversorgung, Monitoring per App. Bei Netzausfall trennt sich das System normgerecht (VDE-AR-N 4105) und versorgt das Haus weiter.</p><a class="link-arrow" href="speicher.html">Speicher im Detail {ARROW}</a></div>
       <div class="card tilt reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2"><path d="M3 20 12 5l9 15z"/><path d="M7 20l5-8 5 8"/></svg></span><h3>Montagesystem – Wagner Solar TRIC</h3><p>Seit 1979 in Kirchhain (Hessen), Eigenproduktion, TÜV-zertifiziert mit bauaufsichtlicher Zulassung. Aufdach-Systeme für Pfannen-, Schiefer- und Trapezblechdächer sowie Flachdach-Aufständerungen.</p><a class="link-arrow" href="https://wagner-solar.com/de/" target="_blank" rel="noopener">wagner-solar.com {ARROW}</a></div>
     </div>
   </div>
 </section>
 
-<section class="sec" style="background:var(--bg-2)">
-  <div class="wrap">
-    <div class="sec-head"><p class="eyebrow">Dächer</p><h2 class="h-l split">Sattel, Pult, Flach – und das steile Pfannendach.</h2><p class="lead">Wir montieren auf allen gängigen Dachformen. Bei sehr flachen Ziegeldächern (unter 22°) beraten wir ehrlich: Dort ist das Risiko für Undichtigkeiten nach dem Ausklinken der Ziegel erhöht.</p></div>
-    <div class="gal">
-      <figure class="wide">{img('r-zg30', 'Flachdach- und Fassadenanlage in Stolberg mit 29,97 kWp', 1204, 1065, sizes='(max-width: 820px) 100vw, 50vw')}<figcaption>Stolberg · Flachdach + Fassade · 29,97 kWp</figcaption></figure>
-      <figure>{img('r-baur', 'Satteldach mit Photovoltaik-Modulen', 1204, 903, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Satteldach</figcaption></figure>
-      <figure>{img('r-carport', 'Glas-Glas-Module als Carportdach von unten', 796, 600, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Solarcarport, Glas-Glas</figcaption></figure>
-      <figure>{img('r-hpim0597', 'Flachdach-Aufständerung auf einem Bürogebäude', 796, 600, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Flachdach, aufgeständert</figcaption></figure>
-      <figure>{img('r-hpim0581', 'Photovoltaik auf einem roten Ziegeldach mit Gaube', 796, 600, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Ziegeldach mit Gaube</figcaption></figure>
-      <figure class="wide">{img('r-yingli', 'Große Dachanlage in Jülich mit 258 Modulen', 1204, 903, sizes='(max-width: 820px) 100vw, 50vw')}<figcaption>Jülich · 46,44 kWp · 258 Module</figcaption></figure>
-    </div>
-    <p class="muted" style="margin-top:18px;font-size:14px">Alle Fotos: Kundenanlagen von SOTECH. Weitere Referenzen auf der Seite <a class="link-arrow" href="ueber-uns.html#referenzen">Über uns {ARROW}</a></p>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head"><p class="eyebrow">Ablauf</p><h2 class="h-l split">In sechs Schritten zur eigenen Anlage.</h2></div>
-    <div class="steps">
-      <div class="step reveal"><h3>Beratung vor Ort</h3><p>Elektromeister Dirk Gier kommt kostenlos zu Ihnen, schaut sich Dach und Zählerschrank an und bespricht Ihre Ziele.</p></div>
-      <div class="step reveal"><h3>Angebot &amp; Planung</h3><p>Belegungsplan, Komponenten, Speicher- und Wallbox-Option – unverbindlich und kostenlos. Ein Vergleichsangebot einzuholen ist ausdrücklich in Ordnung.</p></div>
-      <div class="step reveal"><h3>Anmeldung beim Netzbetreiber</h3><p>Wir melden die Anlage an und klären die Zählerfrage – Sie müssen sich um nichts kümmern.</p></div>
-      <div class="step reveal"><h3>Montage</h3><p>Dachhaken, Schienen, Module, Verkabelung – ein eingespieltes Team, meist an einem Tag.</p></div>
-      <div class="step reveal"><h3>Inbetriebnahme &amp; Einweisung</h3><p>Zählerwechsel, Messung, Inbetriebnahme, Monitoring-App – und eine Einweisung, die Sie verstehen.</p></div>
-      <div class="step reveal"><h3>Marktstammdatenregister &amp; Service</h3><p>Registrierung innerhalb eines Monats, Wartung und Monitoring danach. Wir sind auch nach 37 Jahren noch am selben Standort.</p></div>
-    </div>
-  </div>
-</section>
-''' + cta_section('Ihr Dach, unser Angebot.', 'Kostenlos und unverbindlich – vom Familienbetrieb, der nach der Installation nicht verschwindet.')
+''' + STORY_SEC + cta_section('Ihr Dach, unser Angebot.', 'Kostenlos und unverbindlich – vom Familienbetrieb, der nach der Installation nicht verschwindet.')
 pages.append(dict(file='photovoltaik.html', title='Photovoltaik Stolberg & Aachen – Planung & Montage | SOTECH', desc='PV-Anlagen für Sattel-, Pult- und Flachdach: Heckert-Module, SMA-Wechselrichter, eigenes Montageteam. Konfigurator mit Vorschau, kostenlose Beratung vor Ort.', body=PV))
 
 # ============================ SPEICHER & WALLBOX ============================
-SW = page_hero({}, 'u-laden', 'Elektroauto lädt an einer Wallbox', 'Speicher & Wallbox', 'Speicher und Wallbox: Strom, wann Sie ihn brauchen.', 'Ein Batteriespeicher hebt den Eigenverbrauch deutlich, eine Wallbox macht Ihr Zuhause bereit für die Elektromobilität. Beides installieren wir sicher, schnell und aus einer Hand.', 'Leistung 03', meta=[('Speicher', 'SMA DC-System, Tesla'), ('Wallbox', 'Zappy 11 kW'), ('Anmeldung', 'inklusive')], w=1200, h=1620) + f'''
-<section class="sec" id="speicher">
+SP = page_hero({}, 'k-speicher', 'SMA-Speichersystem und Wechselrichter an einer Kellerwand', 'Stromspeicher', 'Sonne auch nach Sonnenuntergang.', 'Ein Batteriespeicher hebt den Eigenverbrauch von rund 30 auf 60 Prozent – und mit Ersatzstromfunktion bleibt das Haus auch bei Netzausfall versorgt.', 'Leistung 03', w=1800, h=1350, meta=[('Systeme', 'SMA DC-System, Tesla'), ('Notstrom', 'Steckdose oder Ersatzstrom'), ('Monitoring', 'per App')]) + f'''
+<section class="sec">
   <div class="wrap">
     <div class="two">
       <div class="ph-img reveal">{img('k-speicher', 'SMA-Speichersystem und Wechselrichter an einer Kellerwand', 1800, 1350)}</div>
       <div><p class="eyebrow">Stromspeicher</p><h2 class="h-l split">Sonne auch nach Sonnenuntergang.</h2><p class="lead" style="margin-top:22px">Ohne Speicher nutzen Sie rund 30 % Ihres Solarstroms selbst, mit Speicher etwa 60 % – der Rest wird günstig eingespeist statt teuer zugekauft. Wir dimensionieren den Speicher nach Ihrem Verbrauch, nicht nach Katalog.</p>
-      <div class="prose" style="margin-top:22px"><h3>Was läuft bei Netzausfall weiter?</h3><p><b>Notstromsteckdose</b> (SMA Sunny Boy bis 4,6 kW SE): eine separat abgesicherte 16-A-Steckdose liefert Strom, sofern ein SMA-Akku mit mindestens 3,28 kWh vorhanden ist und noch rund 20 % Restkapazität hat – eine kurzfristige Lösung.</p><p><b>Ersatzstrom</b> (SMA DC-Speichersystem): Der Wechselrichter muss dreiphasig sein. Im Zählerschrank werden auf einer Phase bestimmte Stromkreise mit definierten Verbrauchern angeklemmt. Im Winter empfehlen wir, die Entladung auf ca. 50 % zu begrenzen, damit im Ernstfall Reserve bleibt. In jedem Fall lädt der Akku auch bei Stromausfall weiter, wenn genügend Sonne auf die Module fällt.</p><p><a href="ratgeber-notstrom-speicher.html">Ausführlich im Ratgeber: Notstrom und Ersatzstrom {ARROW}</a></p></div></div>
+      <div class="prose" style="margin-top:22px"><h3>Was läuft bei Netzausfall weiter?</h3><p><b>Notstromsteckdose</b> (SMA Sunny Boy bis 4,6 kW SE): eine separat abgesicherte 16-A-Steckdose liefert Strom, sofern ein SMA-Akku mit mindestens 3,28 kWh vorhanden ist und noch rund 20 % Restkapazität hat – eine kurzfristige Lösung.</p><p><b>Ersatzstrom</b> (SMA DC-Speichersystem): Der Wechselrichter muss dreiphasig sein. Im Zählerschrank werden auf einer Phase bestimmte Stromkreise mit definierten Verbrauchern angeklemmt. Im Winter empfehlen wir, die Entladung auf ca. 50 % zu begrenzen, damit im Ernstfall Reserve bleibt. In jedem Fall lädt der Akku auch bei Stromausfall weiter, wenn genügend Sonne auf die Module fällt.</p><p><a href="ratgeber-notstrom-speicher.html">Ausführlich im Ratgeber: Notstrom und Ersatzstrom</a></p></div></div>
     </div>
   </div>
 </section>
@@ -411,7 +372,10 @@ SW = page_hero({}, 'u-laden', 'Elektroauto lädt an einer Wallbox', 'Speicher & 
   </div>
 </section>
 
-<section class="sec" id="wallbox">
+''' + CALC_SEC.replace('Was bringt Ihr Dach?', 'Was bringt Ihr Dach – mit Speicher?').replace('id="rechner"', 'id="rechner"') + cta_section('Welcher Speicher passt zu Ihnen?', 'Wir dimensionieren nach Ihrem Verbrauch, nicht nach Katalog – kostenlos und unverbindlich.')
+pages.append(dict(file='speicher.html', title='Stromspeicher mit Notstrom – SMA & Tesla | SOTECH Stolberg', desc='Batteriespeicher für Ihre PV-Anlage: SMA DC-System und Tesla, Notstrom oder Ersatzstrom bei Netzausfall. Rechner: Was bringt Ihr Dach mit Speicher?', body=SP))
+WB = page_hero({}, 'u-laden', 'Elektroauto lädt an einer Wallbox', 'Wallbox', 'Tanken in der eigenen Garage.', 'Wir installieren Wallboxen mit 11 kW – in der Garage, am Carport oder in der Tiefgarage – inklusive der verpflichtenden Anmeldung beim Netzbetreiber.', 'Leistung 04', w=1200, h=1620, meta=[('Wallbox', 'Zappy 11 kW'), ('Anmeldung', 'inklusive'), ('Steuerbar', 'nach § 14a EnWG')]) + f'''
+<section class="sec">
   <div class="wrap">
     <div class="two">
       <div><p class="eyebrow">Wallbox 11 kW</p><h2 class="h-l split">Tanken zu Hause – sicher, schnell, angemeldet.</h2><p class="lead" style="margin-top:22px">Elektroautos dürfen aus Sicherheitsgründen nicht dauerhaft an der Haushaltssteckdose geladen werden. Wir installieren leistungsstarke Wallboxen (11 kW) – in der Garage, am Carport oder in der Tiefgarage. Wir prüfen die Gegebenheiten vor Ort und kümmern uns um alles, inklusive der verpflichtenden Anmeldung beim Netzbetreiber.</p>
@@ -442,8 +406,8 @@ SW = page_hero({}, 'u-laden', 'Elektroauto lädt an einer Wallbox', 'Speicher & 
     </div>
   </div>
 </section>
-''' + cta_section('Speicher oder Wallbox? Am besten beides.', 'Wir prüfen vor Ort, was zu Ihrem Haus und Ihrem Verbrauch passt – kostenlos und unverbindlich.')
-pages.append(dict(file='speicher-wallbox.html', title='Stromspeicher & Wallbox 11 kW – Stolberg, Aachen | SOTECH', desc='SMA- und Tesla-Speicher mit Notstrom, Zappy Wallbox 11 kW inkl. Netzbetreiber-Anmeldung. Checkliste: Ist Ihr Hausanschluss bereit? Familienbetrieb seit 1988.', body=SW))
+''' + cta_section('Bereit für die Wallbox?', 'Vor-Ort-Prüfung, Montage und Anmeldung aus einer Hand – kostenlos beraten lassen.')
+pages.append(dict(file='wallbox.html', title='Wallbox 11 kW installieren – Stolberg, Aachen | SOTECH', desc='Zappy Wallbox 11 kW mit Anmeldung beim Netzbetreiber, steuerbar nach § 14a EnWG. Checkliste: Ist Ihr Hausanschluss bereit? Elektromeisterbetrieb seit 1988.', body=WB))
 
 # ============================ SERVICE & ANMELDUNG ============================
 SV = page_hero({}, 'k-zaehlerschrank', 'Geöffneter Zählerschrank mit Zweirichtungszähler', 'Service & Anmeldung', 'Die Bürokratie übernehmen wir.', 'Anmeldung beim Netzbetreiber, Marktstammdatenregister, Wärmepumpen-Anmeldung, Versicherung, Wartung und Monitoring – das größte Plus eines Familienbetriebs ist die Entlastung nach dem Kauf.', 'Leistung 04', w=796, h=600, meta=[('Bürozeiten', 'Mo–Do 8–15, Fr 8–14 Uhr'), ('Notfall', CO['tel2'])]) + f'''
@@ -484,22 +448,8 @@ SV = page_hero({}, 'k-zaehlerschrank', 'Geöffneter Zählerschrank mit Zweiricht
   </div>
 </section>
 
-<section class="sec" style="background:var(--bg-2)">
-  <div class="wrap">
-    <div class="sec-head"><p class="eyebrow">Angebot anfordern</p><h2 class="h-l split">Was wir für ein Angebot brauchen.</h2><p class="lead">Je genauer die Eckdaten, desto genauer das Angebot. Diese Angaben helfen uns – Sie können sie direkt im Kontaktformular eintragen.</p></div>
-    <div class="steps">
-      <div class="step reveal"><h3>Standort</h3><p>PLZ, Ort, Straße und Hausnummer – damit wir Dach und Verschattung vorab einschätzen können.</p></div>
-      <div class="step reveal"><h3>Stromverbrauch</h3><p>Jahresverbrauch in kWh (steht auf der Stromrechnung), z. B. 4.000 kWh.</p></div>
-      <div class="step reveal"><h3>Dach</h3><p>Dachart (Sattel, Pult, Flach), Ausrichtung (Süd, Ost-West …), Eindeckung (Pfannen, Schiefer, Trapezblech).</p></div>
-      <div class="step reveal"><h3>Gewünschte Komponenten</h3><p>PV-Anlage, Stromspeicher, Wallbox – bei der Wallbox grob die Kabelstrecke vom Zählerschrank bis zum Stellplatz.</p></div>
-      <div class="step reveal"><h3>Fotos</h3><p>Offener Zählerschrank aus 1,5 m Entfernung (nur Türen öffnen) und Dachflächen, gern von der anderen Straßenseite oder aus dem Garten.</p></div>
-      <div class="step reveal"><h3>Zeitraum</h3><p>Zeitnah oder in den nächsten 3–6 Monaten? Mit Blick auf den 1.1.2027 lohnt sich Tempo.</p></div>
-    </div>
-    <p style="margin-top:28px"><a class="btn btn-primary" href="kontakt.html?thema=angebot">Angebot anfordern {ARROW}</a></p>
-  </div>
-</section>
 ''' + cta_section('Fragen zur Anmeldung? Wir kennen die Netzbetreiber.', 'Regionale Verwurzelung heißt: Wir kennen die lokalen Gegebenheiten, das Wetter und die Netzbetreiber.')
-pages.append(dict(file='service.html', title='Anmeldung, Wartung & Elektroservice für PV – Stolberg | SOTECH', desc='Netzbetreiber-Anmeldung, Marktstammdatenregister, Wärmepumpen-Anmeldung, Solarversicherung, Wartung und Elektroarbeiten. Zeitplan: Inbetriebnahme vor dem 1.1.2027?', body=SV))
+pages.append(dict(file='service.html', title='Anmeldung, Wartung & Elektroservice für PV – Stolberg | SOTECH', desc='Netzbetreiber-Anmeldung, Marktstammdatenregister, Wärmepumpe, Solarversicherung, Wartung, Elektroarbeiten. Zeitplan: Inbetriebnahme vor dem 1.1.2027?', body=SV))
 
 # ============================ ÜBER UNS ============================
 REFS = [
@@ -566,9 +516,21 @@ UU = page_hero({}, 'k-gelaende', 'Luftaufnahme des SOTECH-Firmengeländes in Sto
   </div>
 </section>
 
-<section class="sec dark rounded-top" id="referenzen">
+<section class="sec" style="background:var(--bg-2)">
   <div class="wrap">
-    <div class="sec-head"><p class="eyebrow">Referenzen</p><h2 class="h-l split">Rund 1.500 Anlagen – hier eine Auswahl.</h2><p class="lead">Punkt anklicken oder Ort wählen. Die vollständige Referenzliste 1988–2023 (PDF) zeigen wir Ihnen gern beim Beratungstermin – zusammen mit der Referenzbildermappe.</p></div>
+    <div class="two">
+      <div class="ph-img reveal" style="aspect-ratio:auto;background:none;max-width:300px">{img('k-siegel', 'EUPD Research Siegel: Ausgezeichneter Installateur Deutschland 2024', 600, 733, sizes='300px')}</div>
+      <div><p class="eyebrow">Auszeichnung</p><h2 class="h-l split">Ausgezeichneter Installateur Deutschland 2023 und 2024.</h2><p class="lead" style="margin-top:22px">Das Marktforschungsunternehmen EUPD Research zeichnet Installateure aus, die von Kunden und Herstellern besonders gut bewertet werden. Dazu 5/5 Sterne bei Google – wir geben unser Bestes.</p><p style="margin-top:22px"><a class="link-arrow" href="https://www.google.com/search?q=SOTECH+GmbH+Rezensionen" target="_blank" rel="noopener">Google-Bewertungen ansehen {ARROW}</a></p></div>
+    </div>
+  </div>
+</section>
+''' + cta_section('Lernen Sie uns kennen.', 'Am besten bei Ihnen zu Hause – oder an unserer Besichtigungsanlage in Aachen.')
+pages.append(dict(file='ueber-uns.html', title='Über SOTECH – Familienbetrieb für Solartechnik seit 1988, Stolberg', desc='Elektromeisterbetrieb aus Stolberg: Team, Geschichte seit 1988, EUPD-Auszeichnung 2023 und 2024. Persönlich, regional, ausbildend.', body=UU))
+
+RF = page_hero({}, 'k-luftbild', 'Luftbild einer Wohnsiedlung mit Photovoltaik-Dächern', 'Referenzen', 'Rund 1.500 Anlagen in 38 Jahren.', 'Von der 4-kWp-Dachanlage bis zur 46-kWp-Großanlage, von Aachen bis Wuppertal – eine Auswahl unserer Arbeit. Und eine Anlage, die Sie besichtigen können.', 'Referenzen', w=1204, h=652, meta=[('Anlagen', 'ca. 1.500'), ('Leistung', '7.800 kWp'), ('Besichtigung', 'Aachen, nach Absprache')]) + f'''
+<section class="sec dark" id="karte">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Karte</p><h2 class="h-l split">Wo wir gebaut haben.</h2><p class="lead">Punkt anklicken oder Ort wählen. Die vollständige Referenzliste 1988–2023 (PDF) zeigen wir Ihnen gern beim Beratungstermin – zusammen mit der Referenzbildermappe.</p></div>
     <div class="rmap">
       <div class="map"><svg viewBox="0 0 800 560" role="img" aria-label="Karte der Region mit Referenzanlagen"></svg><div class="list" role="group" aria-label="Referenzorte"></div></div>
       <div class="info"><div class="pic"></div><div class="t"><h3></h3><p></p><div class="kv"></div></div></div>
@@ -579,14 +541,30 @@ UU = page_hero({}, 'k-gelaende', 'Luftaufnahme des SOTECH-Firmengeländes in Sto
 
 <section class="sec" style="background:var(--bg-2)">
   <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Bilder</p><h2 class="h-l split">Sattel, Pult, Flach – und das steile Pfannendach.</h2><p class="lead">Wir montieren auf allen gängigen Dachformen. Bei sehr flachen Ziegeldächern (unter 22°) beraten wir ehrlich: Dort ist das Risiko für Undichtigkeiten nach dem Ausklinken der Ziegel erhöht.</p></div>
+    <div class="gal">
+      <figure class="wide">{img('r-zg30', 'Flachdach- und Fassadenanlage in Stolberg mit 29,97 kWp', 1204, 1065, sizes='(max-width: 820px) 100vw, 50vw')}<figcaption>Stolberg · Flachdach + Fassade · 29,97 kWp</figcaption></figure>
+      <figure>{img('r-baur', 'Satteldach mit Photovoltaik-Modulen', 1204, 903, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Satteldach</figcaption></figure>
+      <figure>{img('r-carport', 'Glas-Glas-Module als Carportdach von unten', 796, 600, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Solarcarport, Glas-Glas</figcaption></figure>
+      <figure>{img('r-hpim0597', 'Flachdach-Aufständerung auf einem Bürogebäude', 796, 600, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Flachdach, aufgeständert</figcaption></figure>
+      <figure>{img('r-hpim0581', 'Photovoltaik auf einem roten Ziegeldach mit Gaube', 796, 600, sizes='(max-width: 820px) 50vw, 25vw')}<figcaption>Ziegeldach mit Gaube</figcaption></figure>
+      <figure class="wide">{img('r-yingli', 'Große Dachanlage in Jülich mit 258 Modulen', 1204, 903, sizes='(max-width: 820px) 100vw, 50vw')}<figcaption>Jülich · 46,44 kWp · 258 Module</figcaption></figure>
+    </div>
+    <p class="muted" style="margin-top:18px;font-size:14px">Alle Fotos: Kundenanlagen von SOTECH.</p>
+  </div>
+</section>
+
+
+<section class="sec">
+  <div class="wrap">
     <div class="two">
-      <div class="ph-img reveal" style="aspect-ratio:auto;background:none;max-width:300px">{img('k-siegel', 'EUPD Research Siegel: Ausgezeichneter Installateur Deutschland 2024', 600, 733, sizes='300px')}</div>
-      <div><p class="eyebrow">Auszeichnung</p><h2 class="h-l split">Ausgezeichneter Installateur Deutschland 2023 und 2024.</h2><p class="lead" style="margin-top:22px">Das Marktforschungsunternehmen EUPD Research zeichnet Installateure aus, die von Kunden und Herstellern besonders gut bewertet werden. Dazu 5/5 Sterne bei Google – wir geben unser Bestes.</p><p style="margin-top:22px"><a class="link-arrow" href="https://www.google.com/search?q=SOTECH+GmbH+Rezensionen" target="_blank" rel="noopener">Google-Bewertungen ansehen {ARROW}</a></p></div>
+      <div class="ph-img reveal">{img('k-gelaende', 'SOTECH-Firmengelände mit Solardächern und Solarcarport', 1280, 856)}</div>
+      <div><p class="eyebrow">Besichtigungsanlage</p><h2 class="h-l split">Anfassen statt Prospekt.</h2><p class="lead" style="margin-top:22px">In Aachen können Sie nach Terminabsprache eine Anlage im Mehrfamilienhaus besichtigen: Batteriesystem (Tesla III bzw. SMA DC-System 5 × 3,28 kWh), Wallboxen und Wärmepumpe im laufenden Betrieb. Am Demodach lassen sich verschiedene Befestigungssysteme vergleichen.</p><p style="margin-top:26px"><a class="btn btn-primary" href="kontakt.html?thema=besichtigung">Besichtigung vereinbaren {ARROW}</a></p></div>
     </div>
   </div>
 </section>
-''' + cta_section('Lernen Sie uns kennen.', 'Am besten bei Ihnen zu Hause – oder an unserer Besichtigungsanlage in Aachen.')
-pages.append(dict(file='ueber-uns.html', title='Über SOTECH – Familienbetrieb für Solartechnik seit 1988, Stolberg', desc='Elektromeisterbetrieb aus Stolberg: Team, Geschichte seit 1988, 1.500 Referenzanlagen auf der Karte, EUPD-Auszeichnung 2024. Persönlich, regional, ausbildend.', body=UU))
+''' + cta_section('Ihr Dach könnte das nächste sein.', 'Kostenlose Beratung vor Ort – oder an der Besichtigungsanlage in Aachen.')
+pages.append(dict(file='referenzen.html', title='Referenzen – 1.500 PV-Anlagen in Aachen, Stolberg & Region | SOTECH', desc='Referenzanlagen auf der Karte: Stolberg, Aachen, Jülich, Grevenbroich, Wuppertal. Fotos von Sattel-, Pult- und Flachdach. Besichtigungsanlage in Aachen.', body=RF))
 
 # ============================ RATGEBER ============================
 ARTS = [
@@ -613,7 +591,7 @@ ARTS = [
 <blockquote>Kleinere PV-Anlagen bis 25 kW verlieren ab dem Inbetriebnahmedatum 1.1.2027 die garantierte Einspeisevergütung. Wer bis dahin in Betrieb geht, sichert sich 20 Jahre feste Vergütung.</blockquote>
 <p><a href="service.html#zeitplan">Zum Zeitplan: Schaffen wir es vor dem 1.1.2027?</a></p>
 '''),
- dict(file='ratgeber-wallbox-anmeldung.html', tag='Wallbox', img='k-wallbox-4', alt='Wallbox mit Ladekabel in einer Garage', title='Wallbox anmelden: Wann ist es Pflicht – und was heißt § 14a EnWG?', short='CEE-Dose oder Wallbox, 4,2 kW, 11 kW, 22 kW: Wann der Netzbetreiber informiert werden muss und warum ein einfacher Kraftstromstecker oft nicht reicht.', mtitle='Wallbox anmelden: Pflicht ab 4,2 kW, § 14a EnWG | SOTECH', mdesc='Wann muss eine Wallbox beim Netzbetreiber angemeldet werden? Grenzen 4,2 kW und 11 kW, Steuerbarkeit nach § 14a EnWG, Anmeldung über das Inbetriebsetzungsportal.', w=768, h=576, body='''
+ dict(file='ratgeber-wallbox-anmeldung.html', tag='Wallbox', img='k-wallbox-4', alt='Wallbox mit Ladekabel in einer Garage', title='Wallbox anmelden: Wann ist es Pflicht – und was heißt § 14a EnWG?', short='CEE-Dose oder Wallbox, 4,2 kW, 11 kW, 22 kW: Wann der Netzbetreiber informiert werden muss und warum ein einfacher Kraftstromstecker oft nicht reicht.', mtitle='Wallbox anmelden: Pflicht ab 4,2 kW, § 14a EnWG | SOTECH', mdesc='Wann muss eine Wallbox beim Netzbetreiber angemeldet werden? Grenzen 4,2 kW und 11 kW, Steuerbarkeit nach § 14a EnWG, Anmeldung über das Portal.', w=768, h=576, body='''
 <p>Sie haben sich für ein Elektroauto entschieden? Dann brauchen Sie einen sicheren Ladepunkt zu Hause. Elektroautos dürfen aus Sicherheitsgründen nicht dauerhaft an der haushaltsüblichen Steckdose geladen werden. Und: Fast jeder Ladepunkt ist anmeldepflichtig.</p>
 <h2>CEE-Steckdose – anmeldepflichtig oder nicht?</h2>
 <p>Eine reine CEE-Steckdose (Kraftstrom/Starkstrom) muss an sich nicht beim Netzbetreiber angemeldet werden, wenn sie als normale Steckdose dient. Nutzen Sie die CEE-Leitung jedoch dauerhaft als Ladeeinrichtung für ein Elektroauto – zum Beispiel mit einer mobilen Wallbox oder einem mobilen Ladegerät ab 3,7 kW / 4,2 kW –, gilt eine gesetzliche Anmeldepflicht.</p>
@@ -627,7 +605,7 @@ ARTS = [
 <p>Neue steuerbare Verbrauchseinrichtungen – wie moderne Wallboxen und Wärmepumpen – unterliegen Vorgaben zur Dimmbarkeit durch den Netzbetreiber. Ein einfacher CEE-Stecker kann diese technischen Anforderungen oft nicht erfüllen: <strong>Es muss eine schaltbare Steckdose mit Steuerschütz sein.</strong> Und alle Wallboxen sind über das Inbetriebsetzungsportal anzumelden.</p>
 <h2>Wie die Anmeldung läuft</h2>
 <p>Die Meldung erfolgt unkompliziert über die Online-Portale der regionalen Netzbetreiber – oft direkt durch den installierenden Elektrofachbetrieb, also durch uns. Den zuständigen Netzbetreiber finden Sie auf Ihrer Stromrechnung oder direkt auf Ihrem Stromzähler.</p>
-<div class="note"><b>Unser Standard:</b> Zappy Wallbox 11 kW – steuerbar nach § 14a, kombinierbar mit PV-Überschussladen. Vor-Ort-Prüfung, Montage und Anmeldung aus einer Hand. <a href="speicher-wallbox.html#checkliste">Zur Checkliste: Ist Ihr Hausanschluss bereit?</a></div>
+<div class="note"><b>Unser Standard:</b> Zappy Wallbox 11 kW – steuerbar nach § 14a, kombinierbar mit PV-Überschussladen. Vor-Ort-Prüfung, Montage und Anmeldung aus einer Hand. <a href="wallbox.html#checkliste">Zur Checkliste: Ist Ihr Hausanschluss bereit?</a></div>
 '''),
  dict(file='ratgeber-notstrom-speicher.html', tag='Speicher', img='k-speicher', alt='SMA-Speichersystem im Keller', title='Notstrom: Läuft mein Speicher bei Stromausfall weiter?', short='Notstromsteckdose oder Ersatzstrom? Warum sich der Wechselrichter bei Netzausfall abschaltet, wie ein Inselnetz entsteht und was Sie im Winter beachten sollten.', mtitle='Notstrom & Ersatzstrom mit PV-Speicher – so geht’s | SOTECH', mdesc='Läuft der SMA-Speicher bei Stromausfall weiter? Notstromsteckdose vs. Ersatzstrom, galvanische Trennung, Inselnetz, Winterreserve – erklärt vom Fachbetrieb.', w=1800, h=1350, body='''
 <p>Eine der häufigsten Fragen bei der Speicherberatung: „Und wenn der Strom ausfällt – habe ich dann Licht?“ Die Antwort hängt davon ab, wie Ihr System ausgerüstet ist.</p>
@@ -646,7 +624,7 @@ ARTS = [
 <li><strong>Inselnetz-Aufbau:</strong> Erst wenn das Haus zu 100 % isoliert ist, übernimmt der SMA-Wechselrichter selbst die Taktung (50 Hz / 230 V bzw. 400 V).</li>
 <li><strong>Eigenversorgung:</strong> DC-Speicher und PV-Module versorgen nun ausschließlich die Verbraucher im eigenen Haushalt.</li>
 </ol>
-<p>Bei einem Stromausfall verhält sich ein SMA-Hybridsystem (Sunny Tripower Smart Energy oder Sunny Boy Smart Energy) also völlig anders als im Normalbetrieb – und genau das ist der Sinn. <a href="speicher-wallbox.html">Mehr zu Speichern und Wallboxen</a></p>
+<p>Bei einem Stromausfall verhält sich ein SMA-Hybridsystem (Sunny Tripower Smart Energy oder Sunny Boy Smart Energy) also völlig anders als im Normalbetrieb – und genau das ist der Sinn. <a href="speicher.html">Mehr zu Speichern und Wallboxen</a></p>
 '''),
 ]
 RG = f'''
@@ -699,6 +677,21 @@ FQ = f'''
 pages.append(dict(file='faq.html', title='Häufige Fragen zu Photovoltaik, Speicher & Wallbox | SOTECH', desc='Kostet die Beratung etwas? Muss ich die Wallbox anmelden? Läuft der Speicher bei Stromausfall? Antworten vom Familienbetrieb SOTECH aus Stolberg bei Aachen.', body=FQ, ld={"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQS]}))
 
 # ============================ KONTAKT ============================
+ANGEBOT_SEC = f'''<section class="sec" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Angebot anfordern</p><h2 class="h-l split">Was wir für ein Angebot brauchen.</h2><p class="lead">Je genauer die Eckdaten, desto genauer das Angebot. Diese Angaben helfen uns – Sie können sie direkt im Kontaktformular eintragen.</p></div>
+    <div class="steps">
+      <div class="step reveal"><h3>Standort</h3><p>PLZ, Ort, Straße und Hausnummer – damit wir Dach und Verschattung vorab einschätzen können.</p></div>
+      <div class="step reveal"><h3>Stromverbrauch</h3><p>Jahresverbrauch in kWh (steht auf der Stromrechnung), z. B. 4.000 kWh.</p></div>
+      <div class="step reveal"><h3>Dach</h3><p>Dachart (Sattel, Pult, Flach), Ausrichtung (Süd, Ost-West …), Eindeckung (Pfannen, Schiefer, Trapezblech).</p></div>
+      <div class="step reveal"><h3>Gewünschte Komponenten</h3><p>PV-Anlage, Stromspeicher, Wallbox – bei der Wallbox grob die Kabelstrecke vom Zählerschrank bis zum Stellplatz.</p></div>
+      <div class="step reveal"><h3>Fotos</h3><p>Offener Zählerschrank aus 1,5 m Entfernung (nur Türen öffnen) und Dachflächen, gern von der anderen Straßenseite oder aus dem Garten.</p></div>
+      <div class="step reveal"><h3>Zeitraum</h3><p>Zeitnah oder in den nächsten 3–6 Monaten? Mit Blick auf den 1.1.2027 lohnt sich Tempo.</p></div>
+    </div>
+    <p style="margin-top:28px"><a class="btn btn-primary" href="kontakt.html?thema=angebot">Angebot anfordern {ARROW}</a></p>
+  </div>
+</section>
+'''
 KO = f'''
 <section class="ph short">
   {img('k-fuhrpark', 'SOTECH-Firmengebäude mit Fahrzeugen', 768, 576, lazy=False, sizes='100vw')}
@@ -734,6 +727,7 @@ KO = f'''
     </div>
   </div>
 </section>
+''' + ANGEBOT_SEC + f'''
 '''
 pages.append(dict(file='kontakt.html', title='Kontakt – SOTECH GmbH, Am Birkenfeld 10, Stolberg', desc='Kostenlose Beratung anfragen: Telefon 02402 7097620, info@sotech.de. Büro im Gewerbegebiet Steinfurt, Stolberg. Mo–Do 8–15 Uhr, Fr 8–14 Uhr.', body=KO))
 
@@ -796,7 +790,7 @@ for p in pages:
     open(OUT + p['file'], 'w', encoding='utf-8').write(html)
     print(p['file'], len(html) // 1024, 'KB', len(p['title']), len(p['desc']))
 urls = [p['file'] for p in pages if not p.get('noindex')]
-open(OUT + 'sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{DOMAIN}/{"" if u=="index.html" else u}</loc><lastmod>{TODAY}</lastmod><changefreq>{"weekly" if u=="index.html" else "monthly"}</changefreq><priority>{"1.0" if u=="index.html" else "0.8" if u in ("photovoltaik.html","speicher-wallbox.html","service.html","kontakt.html") else "0.6"}</priority></url>\n' for u in urls) + '</urlset>\n')
+open(OUT + 'sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{DOMAIN}/{"" if u=="index.html" else u}</loc><lastmod>{TODAY}</lastmod><changefreq>{"weekly" if u=="index.html" else "monthly"}</changefreq><priority>{"1.0" if u=="index.html" else "0.8" if u in ("photovoltaik.html","speicher.html","wallbox.html","service.html","kontakt.html") else "0.6"}</priority></url>\n' for u in urls) + '</urlset>\n')
 open(OUT + 'robots.txt', 'w').write(f'User-agent: *\nAllow: /\nDisallow: /danke.html\n\nSitemap: {DOMAIN}/sitemap.xml\n')
 open(OUT + 'img/logo.svg', 'w').write(LOGO.replace('fill="currentColor"', 'fill="#1d1d1f"'))
 print('ok', len(pages))
