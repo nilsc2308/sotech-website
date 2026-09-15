@@ -4,6 +4,7 @@ import json, os, re, datetime
 OUT = '/Users/nilscremerius/Documents/website 1/sotech-web/'
 DOMAIN = 'https://www.sotech.de'
 TODAY = '2026-09-15'
+VER = '20260915-3'
 CO = dict(name='SOTECH GmbH', street='Am Birkenfeld 10', zip='52222', city='Stolberg', tel='02402 7097620', telh='+4924027097620', mobil='0171 5296741', mobilh='+491715296741', tel2='0241 562489', tel2h='+49241562489', fax='02402 7097621', mail='info@sotech.de', lat='50.7842942', lon='6.2324344')
 
 LOGO = '''<svg viewBox="0 0 300 86" role="img" aria-label="SOTECH Solartechnik" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="300" height="12" fill="#ba0600"/><text x="0" y="58" font-family="Archivo,'Arial Black',Arial,sans-serif" font-weight="900" font-size="54" font-stretch="110%" letter-spacing="-1.5" fill="currentColor" textLength="300" lengthAdjust="spacingAndGlyphs">SOTECH</text><text x="0" y="82" font-family="Archivo,Arial,sans-serif" font-weight="600" font-size="15" fill="currentColor" textLength="300" lengthAdjust="spacing">SOLARTECHNIK</text></svg>'''
@@ -62,7 +63,7 @@ def head(p):
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v={VER}">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -129,7 +130,7 @@ def foot():
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-<script src="main.js"></script>
+<script src="main.js?v={VER}"></script>
 </body>
 </html>
 '''
