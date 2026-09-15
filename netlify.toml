@@ -1,0 +1,83 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Weiterleitungen alter Adressen von sotech.de
+[[redirects]]
+  from = "/index2.php"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/unternehmen-team/*"
+  to = "/ueber-uns.html"
+  status = 301
+[[redirects]]
+  from = "/referenzen/*"
+  to = "/ueber-uns.html#referenzen"
+  status = 301
+[[redirects]]
+  from = "/produkte/*"
+  to = "/photovoltaik.html"
+  status = 301
+[[redirects]]
+  from = "/wallbox/*"
+  to = "/speicher-wallbox.html"
+  status = 301
+[[redirects]]
+  from = "/ueberschusseinspeisung/*"
+  to = "/service.html"
+  status = 301
+[[redirects]]
+  from = "/solarversicherung/*"
+  to = "/service.html"
+  status = 301
+[[redirects]]
+  from = "/angebot-anfordern/*"
+  to = "/kontakt.html?thema=angebot"
+  status = 301
+[[redirects]]
+  from = "/kundenumfrage/*"
+  to = "/kontakt.html"
+  status = 301
+[[redirects]]
+  from = "/news/*"
+  to = "/ratgeber.html"
+  status = 301
+[[redirects]]
+  from = "/wissen/*"
+  to = "/ratgeber.html"
+  status = 301
+[[redirects]]
+  from = "/kontakt.php"
+  to = "/kontakt.html"
+  status = 301
+[[redirects]]
+  from = "/vielen-dank-fuer-ihre-anfrage.php"
+  to = "/danke.html"
+  status = 301
+[[redirects]]
+  from = "/datenschutzverordnung-ds-gvo.html"
+  to = "/datenschutz.html"
+  status = 301
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
